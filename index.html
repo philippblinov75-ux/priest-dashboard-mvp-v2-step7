@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Priest Dashboard — Регистрация прихода</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Priest Dashboard — Регистрация прихода</h1>
+      <a href="admin.html"><button class="ghost">Панель модератора</button></a>
+    </div>
+    <div class="card grid">
+      <div class="row">
+        <div>
+          <label>Имя батюшки</label>
+          <input id="priestName" placeholder="напр. отец Елпидифор" />
+        </div>
+        <div>
+          <label>Название прихода</label>
+          <input id="parishName" placeholder="напр. Храм св. великомученика Георгия в Песках" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Населённый пункт</label>
+          <input id="city" placeholder="деревня/город, регион" />
+        </div>
+        <div>
+          <label>Slug (латиницей, для публичной страницы)</label>
+          <input id="slug" placeholder="hram-v-peskah" />
+        </div>
+      </div>
+      <div>
+        <label>Описание храма</label>
+        <textarea id="description" placeholder="Коротко о храме, святынях, расписании и т.д."></textarea>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Аватар батюшки (jpg/png)</label>
+          <input id="avatar" type="file" accept="image/*" />
+          <div id="avatarPreview" class="preview" style="display:none"></div>
+        </div>
+        <div>
+          <label>Фото храма (jpg/png)</label>
+          <input id="churchPhoto" type="file" accept="image/*" />
+          <div id="churchPreview" class="preview" style="display:none"></div>
+        </div>
+      </div>
+
+      <div class="flex">
+        <button id="submitBtn">Отправить на модерацию</button>
+        <button id="resetBtn" class="ghost">Сбросить форму</button>
+        <div id="status"></div>
+      </div>
+      <small>Подсказка: публичная страница после аппрува откроется по адресу <kbd>parish.html?slug=&lt;ваш-slug&gt;</kbd>.</small>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
