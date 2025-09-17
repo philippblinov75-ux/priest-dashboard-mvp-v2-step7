@@ -21,6 +21,7 @@
         <div>
           <label>Название прихода</label>
           <input id="parishName" placeholder="напр. Храм св. великомученика Георгия в Песках" />
+          <div class="hint"><small>Ссылка сгенерируется автоматически по названию.</small></div>
         </div>
       </div>
       <div class="row">
@@ -29,8 +30,8 @@
           <input id="city" placeholder="деревня/город, регион" />
         </div>
         <div>
-          <label>Slug (латиницей, для публичной страницы)</label>
-          <input id="slug" placeholder="hram-v-peskah" />
+          <label>Публичная ссылка (генерируется)</label>
+          <input id="slugPreview" readonly />
         </div>
       </div>
       <div>
@@ -56,7 +57,7 @@
         <button id="resetBtn" class="ghost">Сбросить форму</button>
         <div id="status"></div>
       </div>
-      <small>Подсказка: публичная страница после аппрува откроется по адресу <kbd>parish.html?slug=&lt;ваш-slug&gt;</kbd>.</small>
+      <small>Подсказка: публичная страница после аппрува откроется по адресу <kbd>parish.html?slug=&lt;slug&gt;</kbd>.</small>
     </div>
   </div>
   <script src="app.js"></script>
