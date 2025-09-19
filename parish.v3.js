@@ -1,6 +1,6 @@
-// parish.v3.js — публичная страница + копирование ссылки
+// parish.v3.js — публичная страница + копирование ссылки + заметный тост
 const KEY = 'pd.applications';
-const $ = (s) => document.querySelector(s);
+const $   = (s) => document.querySelector(s);
 
 function load() {
   try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
@@ -32,13 +32,21 @@ function card(app) {
   `;
 }
 
-function showToast(msg) {
+// Заметный тост вверху экрана
+function showToast(msg, type='ok') {
   const t = $('#toast');
   if (!t) return;
   t.textContent = msg;
-  t.style.display = 'block';
+  t.style.background = (type === 'ok') ? '#22c55e' : '#ef4444';
+  // анимация «въезда»
+  t.style.opacity   = '1';
+  t.style.transform = 'translate(-50%, 0)';
   clearTimeout(showToast._h);
-  showToast._h = setTimeout(() => (t.style.display = 'none'), 1500);
+  showToast._h = setTimeout(() => {
+    // анимация «уезда»
+    t.style.opacity   = '0';
+    t.style.transform = 'translate(-50%, -16px)';
+  }, 1600);
 }
 
 function init() {
@@ -49,17 +57,17 @@ function init() {
     copyBtn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(location.href);
-        showToast('Ссылка скопирована');
+        showToast('Ссылка скопирована', 'ok');
       } catch {
-        showToast('Не удалось скопировать');
+        showToast('Не удалось скопировать', 'err');
       }
     });
   }
 
   // рендер прихода
   const params = new URLSearchParams(location.search);
-  const slug = params.get('slug');
-  const apps = load();
+  const slug   = params.get('slug');
+  const apps   = load();
 
   if (!slug) {
     $('#title').textContent = 'Нет параметра slug';
