@@ -35,3 +35,17 @@ button.bad{background:var(--bad)}
 hr{border:none;border-top:1px solid #232733;margin:16px 0}
 kbd{background:#222631;border:1px solid #2b3040;border-radius:6px;padding:2px 6px;font-size:12px}
 small{color:var(--muted)}
+/* Подсветка активной вкладки в админке */
+#tabs .ghost{
+  border-color: rgba(255,255,255,.15);
+  color: rgba(255,255,255,.75);
+  transition: background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+#tabs .ghost.active{
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  border-color: rgba(255,255,255,.35);
+  /* тонкий акцент снизу как у «таба» */
+  box-shadow: inset 0 -2px 0 var(--accent, #22c55e);
+}
