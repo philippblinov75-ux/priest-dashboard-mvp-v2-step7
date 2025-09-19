@@ -14,46 +14,57 @@
     </div>
     <div id="content" class="grid"></div>
   </div>
+
   <script>
     const KEY='pd.applications';
+    const $ = (s)=>document.querySelector(s);
     const params = new URLSearchParams(location.search);
     const slug = params.get('slug');
-    const $ = (s)=>document.querySelector(s);
-    function load(){ try { return JSON.parse(localStorage.getItem(KEY)||'[]'); } catch(e){ return []; } }
-    function tpl(app){
-      return \`
+
+    function load(){
+      try { return JSON.parse(localStorage.getItem(KEY)||'[]'); }
+      catch(e){ console.warn('LS parse error', e); return []; }
+    }
+
+    function card(app){
+      return `
         <div class="card">
           <div class="flex" style="justify-content:space-between">
             <div class="flex">
-              \${app.avatarDataUrl ? '<img src="'+app.avatarDataUrl+'" style="width:72px;height:72px;border-radius:12px;object-fit:cover"/>' : ''}
+              ${app.avatarDataUrl ? '<img src="'+app.avatarDataUrl+'" style="width:72px;height:72px;border-radius:12px;object-fit:cover"/>' : ''}
               <div>
-                <div style="font-size:20px;font-weight:700">\${app.parishName}</div>
-                <div><small>\${app.priestName} — \${app.city}</small></div>
+                <div style="font-size:20px;font-weight:700">${app.parishName}</div>
+                <div><small>${app.priestName} — ${app.city}</small></div>
+                <div><small>slug: ${app.slug} · статус: ${app.status}</small></div>
               </div>
             </div>
-            \${app.churchDataUrl ? '<img src="'+app.churchDataUrl+'" style="width:160px;height:96px;border-radius:12px;object-fit:cover"/>' : ''}
+            ${app.churchDataUrl ? '<img src="'+app.churchDataUrl+'" style="width:160px;height:96px;border-radius:12px;object-fit:cover"/>' : ''}
           </div>
           <hr/>
-          <div>\${app.description.replace(/\n/g,'<br/>')}</div>
-          <hr/>
-          <div class="flex">
-            <button class="ghost" disabled>Расписание (скоро)</button>
-            <button class="ghost" disabled>Донаты (скоро)</button>
-            <button class="ghost" disabled>Аудио (скоро)</button>
-          </div>
+          <div>${(app.description||'').replace(/\n/g,'<br/>')}</div>
         </div>
-      \`;
+      `;
     }
-    const apps = load();
-    const app = apps.find(a=>a.slug===slug && a.status==='approved');
-    if (!app){
-      $('#title').textContent = 'Приход не найден или не одобрен';
-      $('#content').innerHTML = '<small>Проверьте slug или статус модерации.</small>';
-    } else {
-      $('#title').textContent = app.parishName;
-      $('#content').innerHTML = tpl(app);
-      document.title = app.parishName + ' — Priest Dashboard';
-    }
+
+    (function run(){
+      const apps = load();
+      const found = apps.find(a => a.slug === slug); // показываем по любому статусу
+      if (!slug){
+        $('#title').textContent = 'Нет параметра slug';
+        $('#content').innerHTML = '<small>Откройте страницу из админки или добавьте ?slug=...</small>';
+        return;
+      }
+      if (!found){
+        const have = apps.map(a=>a.slug).join(', ') || '—';
+        $('#title').textContent = 'Приход не найден';
+        $('#content').innerHTML = '<small>Искомый slug: <b>'+slug+
+          '</b>. Наличие в хранилище: '+have+'</small>';
+        return;
+      }
+      document.title = found.parishName + ' — Priest Dashboard';
+      $('#title').textContent = found.parishName;
+      $('#content').innerHTML = card(found);
+    })();
   </script>
 </body>
 </html>
