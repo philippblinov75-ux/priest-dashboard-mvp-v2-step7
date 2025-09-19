@@ -69,6 +69,7 @@
     </div>
   </div>
 
-  <script src="app.js?v={{ site.time | date: '%s' }}"></script>
+  <!-- Подключаем НОВЫЙ файл, чтобы точно обойти кэш -->
+  <script src="app.v2.js?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>
