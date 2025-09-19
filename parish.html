@@ -1,10 +1,12 @@
+---
+---
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Priest Dashboard — Приход</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v={{ site.time | date: '%s' }}" />
 </head>
 <body>
   <div class="container">
@@ -23,7 +25,7 @@
 
     function load(){
       try { return JSON.parse(localStorage.getItem(KEY)||'[]'); }
-      catch(e){ console.warn('LS parse error', e); return []; }
+      catch(e){ return []; }
     }
 
     function card(app){
@@ -35,35 +37,38 @@
               <div>
                 <div style="font-size:20px;font-weight:700">${app.parishName}</div>
                 <div><small>${app.priestName} — ${app.city}</small></div>
-                <div><small>slug: ${app.slug} · статус: ${app.status}</small></div>
               </div>
             </div>
             ${app.churchDataUrl ? '<img src="'+app.churchDataUrl+'" style="width:160px;height:96px;border-radius:12px;object-fit:cover"/>' : ''}
           </div>
           <hr/>
           <div>${(app.description||'').replace(/\n/g,'<br/>')}</div>
+          <hr/>
+          <div class="flex">
+            <button class="ghost" disabled>Расписание (скоро)</button>
+            <button class="ghost" disabled>Донаты (скоро)</button>
+            <button class="ghost" disabled>Аудио (скоро)</button>
+          </div>
         </div>
       `;
     }
 
     (function run(){
-      const apps = load();
-      const found = apps.find(a => a.slug === slug); // показываем по любому статусу
       if (!slug){
         $('#title').textContent = 'Нет параметра slug';
         $('#content').innerHTML = '<small>Откройте страницу из админки или добавьте ?slug=...</small>';
         return;
       }
-      if (!found){
-        const have = apps.map(a=>a.slug).join(', ') || '—';
-        $('#title').textContent = 'Приход не найден';
-        $('#content').innerHTML = '<small>Искомый slug: <b>'+slug+
-          '</b>. Наличие в хранилище: '+have+'</small>';
+      const apps = load();
+      const app = apps.find(a=>a.slug===slug && a.status==='approved');
+      if (!app){
+        $('#title').textContent = 'Приход не найден или не одобрен';
+        $('#content').innerHTML = '<small>Искомый slug: <b>'+slug+'</b>.</small>';
         return;
       }
-      document.title = found.parishName + ' — Priest Dashboard';
-      $('#title').textContent = found.parishName;
-      $('#content').innerHTML = card(found);
+      document.title = app.parishName + ' — Priest Dashboard';
+      $('#title').textContent = app.parishName;
+      $('#content').innerHTML = card(app);
     })();
   </script>
 </body>
