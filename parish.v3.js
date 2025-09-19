@@ -1,4 +1,4 @@
-// parish.v3.js — публичная страница прихода + копирование ссылки
+// parish.v3.js — публичная страница + копирование ссылки
 const KEY = 'pd.applications';
 const $ = (s) => document.querySelector(s);
 
@@ -32,7 +32,6 @@ function card(app) {
   `;
 }
 
-// Тост
 function showToast(msg) {
   const t = $('#toast');
   if (!t) return;
@@ -42,12 +41,9 @@ function showToast(msg) {
   showToast._h = setTimeout(() => (t.style.display = 'none'), 1500);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(location.search);
-  const slug = params.get('slug');
-  const apps = load();
-
-  // обработчик копирования ссылки
+function init() {
+  console.log('parish.v3.js loaded');
+  // копирование ссылки
   const copyBtn = $('#copyLink');
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
@@ -60,22 +56,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // рендер прихода
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug');
+  const apps = load();
+
   if (!slug) {
     $('#title').textContent = 'Нет параметра slug';
     $('#content').innerHTML = '<small>Откройте страницу из админки или добавьте ?slug=...</small>';
     return;
   }
-
   const app = apps.find(a => a.slug === slug && a.status === 'approved');
   if (!app) {
     $('#title').textContent = 'Приход не найден или не одобрен';
     $('#content').innerHTML = '<small>Искомый slug: <b>' + slug + '</b>.</small>';
     return;
   }
-
   document.title = app.parishName + ' — Priest Dashboard';
   $('#title').textContent = app.parishName;
   $('#content').innerHTML = card(app);
+}
 
-  console.log('parish.v3.js loaded. slug=', slug);
-});
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
