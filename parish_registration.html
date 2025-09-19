@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Регистрация храма</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <form
+    onsubmit="handleSubmit(event)"
+    class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow"
+  >
+    <h2 class="text-2xl font-bold mb-4">Регистрация храма</h2>
+
+    <!-- Храм -->
+    <label class="block mb-2">Название храма</label>
+    <input type="text" id="parishName" class="w-full border rounded p-2 mb-4" required />
+
+    <label class="block mb-2">Адрес</label>
+    <input type="text" id="address" class="w-full border rounded p-2 mb-4" required />
+
+    <label class="block mb-2">Описание</label>
+    <textarea id="description" class="w-full border rounded p-2 mb-4" rows="3"></textarea>
+
+    <label class="block mb-2">Фото храма</label>
+    <input type="file" id="photo" class="mb-4" />
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">Реквизиты прихода</h3>
+    <select id="payoutProvider" class="w-full border rounded p-2 mb-4">
+      <option value="bank">Банковский счёт</option>
+      <option value="stripe">Stripe</option>
+      <option value="yookassa">ЮKassa</option>
+      <option value="paypal">PayPal</option>
+    </select>
+
+    <textarea id="payoutDetails" class="w-full border rounded p-2 mb-4" placeholder="Введите реквизиты" rows="2" required></textarea>
+
+    <!-- Настоятель -->
+    <h3 class="text-xl font-semibold mt-6 mb-2">Настоятель</h3>
+
+    <label class="block mb-2">ФИО</label>
+    <input type="text" id="priestName" class="w-full border rounded p-2 mb-4" required />
+
+    <label class="block mb-2">Фото настоятеля</label>
+    <input type="file" id="priestPhoto" class="mb-4" required />
+
+    <label class="block mb-2">Краткое описание</label>
+    <textarea id="priestBio" class="w-full border rounded p-2 mb-4" rows="2"></textarea>
+
+    <button
+      type="submit"
+      class="w-full py-2 bg-amber-600 text-white font-semibold rounded-xl"
+    >
+      Зарегистрировать храм
+    </button>
+  </form>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const data = {
+        parishName: document.getElementById("parishName").value,
+        address: document.getElementById("address").value,
+        description: document.getElementById("description").value,
+        payoutProvider: document.getElementById("payoutProvider").value,
+        payoutDetails: document.getElementById("payoutDetails").value,
+        priestName: document.getElementById("priestName").value,
+        priestBio: document.getElementById("priestBio").value
+      };
+      console.log("Форма отправлена:", data);
+      alert("Храм и настоятель отправлены на модерацию!");
+    }
+  </script>
+
+</body>
+</html>
