@@ -1,4 +1,4 @@
-// parish.v3.js — публичная страница + копирование ссылки + заметный тост
+// Публичная страница прихода
 const KEY = 'pd.applications';
 const $   = (s) => document.querySelector(s);
 
@@ -32,39 +32,7 @@ function card(app) {
   `;
 }
 
-// Заметный тост вверху экрана
-function showToast(msg, type='ok') {
-  const t = $('#toast');
-  if (!t) return;
-  t.textContent = msg;
-  t.style.background = (type === 'ok') ? '#22c55e' : '#ef4444';
-  // анимация «въезда»
-  t.style.opacity   = '1';
-  t.style.transform = 'translate(-50%, 0)';
-  clearTimeout(showToast._h);
-  showToast._h = setTimeout(() => {
-    // анимация «уезда»
-    t.style.opacity   = '0';
-    t.style.transform = 'translate(-50%, -16px)';
-  }, 1600);
-}
-
 function init() {
-  console.log('parish.v3.js loaded');
-  // копирование ссылки
-  const copyBtn = $('#copyLink');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(location.href);
-        showToast('Ссылка скопирована', 'ok');
-      } catch {
-        showToast('Не удалось скопировать', 'err');
-      }
-    });
-  }
-
-  // рендер прихода
   const params = new URLSearchParams(location.search);
   const slug   = params.get('slug');
   const apps   = load();
