@@ -12,10 +12,20 @@
   <div class="container">
     <div class="header">
       <h1 id="title">Приход</h1>
-      <a href="index.html"><button class="ghost">Регистрация</button></a>
+      <div class="flex" style="gap:8px">
+        <button id="copyLink" class="ghost">Скопировать ссылку</button>
+        <a href="index.html"><button class="ghost">Регистрация</button></a>
+      </div>
     </div>
+
     <div id="content" class="grid"></div>
   </div>
+  <!-- Тост-уведомление (оформление сразу тут, чтобы не лазить в style.css) -->
+  <div id="toast"
+       style="position:fixed;right:24px;bottom:24px;display:none;
+              background:rgba(0,0,0,.85);color:#fff;padding:10px 14px;
+              border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.35);
+              font-size:14px;z-index:9999"></div>
 
   <script src="parish.v3.js?v={{ site.time | date: '%s' }}"></script>
 </body>
