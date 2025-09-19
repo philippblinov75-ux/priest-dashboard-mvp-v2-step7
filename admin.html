@@ -1,10 +1,12 @@
+---
+---
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Priest Dashboard — Модерация</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v={{ site.time | date: '%s' }}" />
 </head>
 <body>
   <div class="container">
@@ -12,6 +14,7 @@
       <h1>Панель модератора</h1>
       <a href="index.html"><button class="ghost">← К регистрации</button></a>
     </div>
+
     <div class="card">
       <div id="tabs" class="flex">
         <button class="ghost" data-tab="pending">Pending</button>
@@ -22,6 +25,7 @@
       <div id="list" class="grid"></div>
     </div>
   </div>
-  <script src="admin.js"></script>
+
+  <script src="admin.v3.js?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>
