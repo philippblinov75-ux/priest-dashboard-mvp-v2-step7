@@ -1,10 +1,12 @@
+---
+---
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Priest Dashboard — Регистрация прихода</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v={{ site.time | date: '%s' }}" />
 </head>
 <body>
   <div class="container">
@@ -12,6 +14,7 @@
       <h1>Priest Dashboard — Регистрация прихода</h1>
       <a href="admin.html"><button class="ghost">Панель модератора</button></a>
     </div>
+
     <div class="card grid">
       <div class="row">
         <div>
@@ -24,6 +27,7 @@
           <div class="hint"><small>Ссылка сгенерируется автоматически по названию.</small></div>
         </div>
       </div>
+
       <div class="row">
         <div>
           <label>Населённый пункт</label>
@@ -34,6 +38,7 @@
           <input id="slugPreview" readonly />
         </div>
       </div>
+
       <div>
         <label>Описание храма</label>
         <textarea id="description" placeholder="Коротко о храме, святынях, расписании и т.д."></textarea>
@@ -57,9 +62,13 @@
         <button id="resetBtn" class="ghost">Сбросить форму</button>
         <div id="status"></div>
       </div>
-      <small>Подсказка: публичная страница после аппрува откроется по адресу <kbd>parish.html?slug=&lt;slug&gt;</kbd>.</small>
+
+      <small>Подсказка: публичная страница после аппрува откроется по адресу
+        <kbd>parish.html?slug=&lt;slug&gt;</kbd>.
+      </small>
     </div>
   </div>
-<script src="app.js?v=3"></script>
+
+  <script src="app.js?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>
